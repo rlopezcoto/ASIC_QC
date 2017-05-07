@@ -6,6 +6,9 @@ from astropy.io import ascii
 import matplotlib.pyplot as plt
 from matplotlib.pyplot import cm 
 
+#plt.rcParams['grid.color'] = 'k'
+plt.rcParams['grid.linestyle'] = ':'
+plt.rcParams['grid.linewidth'] = 0.5
 
 p = argparse.ArgumentParser(description="Calculate the IC electron spectrum of sources")
 p.add_argument("-f", "--filename", dest="filename", type=str, default='final_bucle_chip18.csv',
@@ -24,16 +27,16 @@ Ch       = args.Ch
 Clip_sel = args.Clip_sel
 
 def read_file(filename):
-	if not os.path.isfile('../Data/%s' % filename):
-		print ("File ../Data/%s does not exist" % (filename))
-		exit()
+    if not os.path.isfile('../Data/%s' % filename):
+	    print ("File ../Data/%s does not exist" % (filename))
+	    exit()
 
-	print ("Reading ../Data/%s" % (filename))
-	names=['Vin_gen','Ch','Att','Clip_b','Clip_sel','Vin','Vin_err','FWHMin','FWHMin_er','Vout','Vout_er',
+    print ("Reading ../Data/%s" % (filename))
+    names=['Vin_gen','Ch','Att','Clip_b','Clip_sel','Vin','Vin_err','FWHMin','FWHMin_er','Vout','Vout_er',
            'FHWMo','FHWMo_er','DT','DT_er','dummy1','dummy2','dummy3','dummy4']
 
-	table=ascii.read('../Data/%s' % filename, data_start=1,names=names)
-        return table
+    table=ascii.read('../Data/%s' % filename, data_start=1,names=names)
+    return table
 
 def Select_event(Att,Ch,Clip_sel):
     # Which Clip_b there are
@@ -50,6 +53,7 @@ def format_axes(ax):
     ax.set_xlabel("Vin [V]")
     ax.set_ylabel("Vout [V]")
     ax.legend(loc="upper left",ncol=6,prop={'size':7})
+    ax.grid(zorder=0)
 
 def plot_figure(table):
     Nb,Clip_b=Select_event(Att,Ch,Clip_sel)
@@ -64,7 +68,7 @@ def plot_figure(table):
                               & (table['Clip_sel']==Clip_sel) & (table['Clip_b']==i))]
         Vout=table['Vout'][np.where((table['Att']==Att) & (table['Ch']==Ch) 
                                 & (table['Clip_sel']==Clip_sel) & (table['Clip_b']==i))]
-        ax.scatter(Vin,Vout, label="Clip=%.0f" % (i),color=c)
+        ax.scatter(Vin,Vout, label="Clip=%.0f" % (i),color=c,zorder=10)
     format_axes(ax)
     fig.savefig("../Figures/Vin_Vout_Ch%.0f_Att%.0f_Clip_sel%.0f.pdf" % (Ch,Att,Clip_sel) )
 
