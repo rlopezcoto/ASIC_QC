@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for Ch in {0..7};do
+for Ch in {0..6};do
 
     for Clip_sel in {1..3}; do
 

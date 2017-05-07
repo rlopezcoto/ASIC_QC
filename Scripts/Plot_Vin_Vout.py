@@ -7,8 +7,8 @@ import matplotlib.pyplot as plt
 from matplotlib.pyplot import cm 
 
 #plt.rcParams['grid.color'] = 'k'
-plt.rcParams['grid.linestyle'] = ':'
-plt.rcParams['grid.linewidth'] = 0.5
+#plt.rcParams['grid.linestyle'] = ':'
+#plt.rcParams['grid.linewidth'] = 0.5
 
 p = argparse.ArgumentParser(description="Calculate the IC electron spectrum of sources")
 p.add_argument("-f", "--filename", dest="filename", type=str, default='final_bucle_chip18.csv',
