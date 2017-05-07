@@ -1,5 +1,9 @@
 # Mac OSX
 .DS_Store
 
+# ipython notebooks
 *.ipynb
 *.ipynb_checkpoints
+
+# Temporary files
+*~
