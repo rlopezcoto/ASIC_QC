@@ -33,11 +33,9 @@ def read_file(filename):
            'FHWMo','FHWMo_er','DT','DT_er','dummy1','dummy2','dummy3','dummy4']
 
 	table=ascii.read('../Data/%s' % filename, data_start=1,names=names)
-	print("end?")
         return table
 
 def Select_event(Att,Ch,Clip_sel):
-    print("inside")
     # Which Clip_b there are
     Clip_b=table['Clip_b'][np.where((table['Att']==Att) & (table['Ch']==Ch) 
 				    & (table['Clip_sel']==Clip_sel)  & (table['Vin_gen']==0.05))]
@@ -77,9 +75,9 @@ def write_output(table):
                                 & (table['Clip_sel']==Clip_sel))]
     Clip_b=table['Clip_b'][np.where((table['Att']==Att) & (table['Ch']==Ch) 
                                 & (table['Clip_sel']==Clip_sel))]
-    zipped(Vin,Vout,Clip_b)
 
-    ascii.write(zipped, '../Results/Vin_Vout_Ch%.0f_Att%.0f_Clip_sel%.0f.csv' % (Ch,Att,Clip_sel))
+    outname='../Results/Vin_Vout_Ch%.0f_Att%.0f_Clip_sel%.0f.csv' % (Ch,Att,Clip_sel)
+    ascii.write([Vin, Vout, Clip_b], outname, names=['Vin[V]', 'Vout[V]','Clip_b'],overwrite=True)
 
 if __name__ == '__main__':
     table=read_file(filename)
